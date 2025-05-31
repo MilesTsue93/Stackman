@@ -5,7 +5,7 @@
 
 const int MAXSIZE = 65536;
 
-// TODO: create a struct for the stack
+// create a struct for the stack
 typedef struct stack {
     int size;
     int* elems;
@@ -32,17 +32,30 @@ int main(int argc, char** argv) {
     while ((c = fgetc(fp)) != EOF) {
 
         // parse arg
-        switch (c)
-        {
-        case '0':
-            // push a zero on the top of the stack
-            s->elems[0] = 0;
-            break;
-        
-        // if there is an invalid CL arg
-        default:
-            printf("invalid instruction\n");
-            exit(3);
+        switch (c) {
+
+            case '0':
+
+                // push a zero on the top of the stack
+                s->elems[0] = 0;
+                break;
+
+            case '+':
+
+                // empty stack error
+                if (isempty(s)) {
+                    printf("Stack underflow. Top of stack is empty.\n");
+                    exit(1);
+                }
+
+                // TODO: add 1 to the top element of the stack
+
+                break;
+                
+            // if there is an invalid CL arg
+            default:
+                printf("Invalid instruction at the command line.\n");
+                exit(3);
         }
     }
 }
@@ -60,11 +73,13 @@ stack* createstack() {
 } 
 
 
+// to check if the stack is empty
 bool isempty(stack* stack) {
     return stack->size == 0;
 }
 
 
+// easy memory free function
 void deletestack(stack* this) {
     free(this->elems);
     free(this);
