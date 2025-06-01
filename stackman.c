@@ -13,6 +13,7 @@ typedef struct stack {
 
 
 // function prototypes
+
 stack* createstack();
 bool isempty(stack* stack);
 void deletestack(stack* this);
@@ -25,7 +26,10 @@ int main(int argc, char** argv) {
 
     // file IO
     FILE *fp;
-    fp = fopen(argv[1], "r");
+    if ((fp = fopen(argv[1], "r")) == NULL) {
+        printf("Unable to open the given file.\n");
+        exit(4);
+    }
     int c;
 
     // loop through file contents
